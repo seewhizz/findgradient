@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 body {
   font-family: "Montserrat", sans-serif;
-  user-select:none;
+  user-select: none;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -17,12 +18,20 @@ html, body {
 }
 
 #title {
-    font-weight: bold;
-    font-size: 18px;
-    position: absolute;
-    top: 2%;
-    left: 2%;
-  }
+  font-weight: bold;
+  font-size: 18px;
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+
+#shades {
+  font-weight: bold;
+  font-size: 18px;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+}
 
 #hint {
   font-size: 18px;

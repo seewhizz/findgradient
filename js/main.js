@@ -17,10 +17,12 @@ function getRandomColor() {
   
     if (brightness == "dark") {
       document.getElementById("title").style.color = "white";
+      document.getElementById("shades").style.color = "white";
       document.getElementById("code").style.color = "white";
       document.getElementById("hint").style.color = "white";
     } else {
       document.getElementById("title").style.color = "black";
+      document.getElementById("shades").style.color = "black";
       document.getElementById("code").style.color = "black";
       document.getElementById("hint").style.color = "black";
     }
