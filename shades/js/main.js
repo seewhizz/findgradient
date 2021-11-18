@@ -72,6 +72,7 @@ document.body.onkeyup = function (e) {
   }
 };
 generateShades();
+document.getElementById("hint").addEventListener("click", generateShades, true);
 
 function lightOrDark(color) {
   // Check the format of the color, HEX or RGB?
@@ -104,6 +105,20 @@ function lightOrDark(color) {
   }
 }
 
+$("div.grid-item").click(function () {
+  var text = $(this).text();
+  
+  copyTextToClipboard(text);
+
+  document.getElementById("hint").innerHTML = "Copied to Clipboard";
+  document.getElementById("hint").style.fontWeight = "bold";
+
+  setTimeout(function () {
+    document.getElementById("hint").innerHTML = "press spacebar for new gradient";
+    document.getElementById("hint").style.fontWeight = "normal";
+  }, 2000);
+});
+
 function generateShades() {
   $("#shades").html("");
 
@@ -129,19 +144,55 @@ function generateShades() {
 
   if (brightness == "dark") {
     document.getElementById("title").style.color = "white";
+    document.getElementById("hint").style.color = "white";
     document.getElementById("shades").style.color = "white";
     document.getElementById("shades").style.borderColor = "white";
     document.getElementById("shades").style.backgroundColor = "white";
-    document.getElementsByClassName("grid-item").style.color = "white";
-    document.getElementsByClassName("grid-item").style.boderColor = "white";
-    document.getElementById("hint").style.color = "white";
   } else {
     document.getElementById("title").style.color = "black";
+    document.getElementById("hint").style.color = "black";
     document.getElementById("shades").style.color = "black";
     document.getElementById("shades").style.borderColor = "black";
     document.getElementById("shades").style.backgroundColor = "black";
-    document.getElementsByClassName("grid-item").style.color = "black";
-    document.getElementsByClassName("grid-item").style.borderColor = "black";
-    document.getElementById("hint").style.color = "black";
   }
 }
+
+function fallbackCopyTextToClipboard(text) {
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+
+  // Avoid scrolling to bottom
+  textArea.style.top = "0";
+  textArea.style.left = "0";
+  textArea.style.position = "fixed";
+
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    var successful = document.execCommand("copy");
+    var msg = successful ? "successful" : "unsuccessful";
+    console.log("Fallback: Copying text command was " + msg);
+  } catch (err) {
+    console.error("Fallback: Oops, unable to copy", err);
+  }
+
+  document.body.removeChild(textArea);
+}
+
+function copyTextToClipboard(text) {
+  if (!navigator.clipboard) {
+    fallbackCopyTextToClipboard(text);
+    return;
+  }
+  navigator.clipboard.writeText(text).then(
+    function () {
+      console.log("Copying to clipboard was successful!");
+    },
+    function (err) {
+      console.error("Could not copy text: ", err);
+    }
+  );
+}
+
